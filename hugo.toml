@@ -1,0 +1,84 @@
+baseURL = "https://example.com/"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = "ColorMag Blog"
+enableRobotsTXT = true
+enableGitInfo = false
+summaryLength = 42
+
+[pagination]
+  pagerSize = 8
+  path = "page"
+
+[permalinks]
+  posts = "/posts/:year/:month/:slug/"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  term = ["HTML", "RSS"]
+
+[outputFormats.JSON]
+  mediaType = "application/json"
+  baseName = "index"
+  isPlainText = true
+  notAlternative = true
+
+[params]
+  description = "A lightweight magazine-style Hugo blog powered by Markdown"
+  author = "Editorial Team"
+  dateFormat = "January 2, 2006"
+  accentColor = "#207daf"
+  showReadingTime = true
+  showTableOfContents = true
+  mainSections = ["posts"]
+  footerText = "A Hugo blog built with Markdown"
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    pageRef = "/"
+    weight = 10
+  [[menu.main]]
+    name = "Posts"
+    pageRef = "/posts"
+    weight = 20
+  [[menu.main]]
+    name = "Categories"
+    pageRef = "/categories"
+    weight = 30
+  [[menu.main]]
+    name = "Tags"
+    pageRef = "/tags"
+    weight = 40
+  [[menu.main]]
+    name = "About"
+    pageRef = "/about"
+    weight = 50
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+  [markup.highlight]
+    noClasses = true
+    lineNos = false
+
+[related]
+  includeNewer = true
+  threshold = 60
+  toLower = true
+  [[related.indices]]
+    name = "categories"
+    weight = 100
+  [[related.indices]]
+    name = "tags"
+    weight = 80
+  [[related.indices]]
+    name = "date"
+    weight = 10

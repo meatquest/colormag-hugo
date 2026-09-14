@@ -1,0 +1,11 @@
+{{ if not .IsHome }}
+<nav class="cm-breadcrumbs" aria-label="{{ i18n `breadcrumbs` }}">
+  <a href="{{ `/` | relURL }}">{{ i18n "home" }}</a>
+  <span aria-hidden="true">/</span>
+  {{ if and .IsPage (eq .Section "posts") }}
+    <a href="{{ `posts/` | relURL }}">{{ i18n "posts" }}</a>
+    <span aria-hidden="true">/</span>
+  {{ end }}
+  <span aria-current="page">{{ .Title }}</span>
+</nav>
+{{ end }}

@@ -1,0 +1,20 @@
+{{- $src := "" -}}
+{{- $srcset := "" -}}
+{{- $width := 0 -}}
+{{- $height := 0 -}}
+{{- with .Params.cover -}}
+  {{- $src = . -}}
+  {{- with $.Resources.GetMatch . -}}
+    {{- $small := .Fill "480x270 Center webp q80" -}}
+    {{- $medium := .Fill "800x450 Center webp q82" -}}
+    {{- $large := .Fill "1200x675 Center webp q82" -}}
+    {{- $src = $large.RelPermalink -}}
+    {{- $srcset = printf "%s 480w, %s 800w, %s 1200w" $small.RelPermalink $medium.RelPermalink $large.RelPermalink -}}
+    {{- $width = $large.Width -}}
+    {{- $height = $large.Height -}}
+  {{- end -}}
+{{- end -}}
+{{- if and $src (strings.HasPrefix $src "/") (not (strings.HasPrefix $src "//")) -}}
+  {{- $src = $src | relURL -}}
+{{- end -}}
+{{- return (dict "src" $src "srcset" $srcset "width" $width "height" $height) -}}

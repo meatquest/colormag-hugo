@@ -1,0 +1,26 @@
+{{- $src := .Destination -}}
+{{- $srcset := "" -}}
+{{- $width := 0 -}}
+{{- $height := 0 -}}
+{{- with .Page.Resources.GetMatch .Destination -}}
+  {{- $candidates := slice -}}
+  {{- if gt .Width 480 -}}
+    {{- $small := .Resize "480x webp q88" -}}
+    {{- $candidates = $candidates | append (printf "%s %dw" $small.RelPermalink $small.Width) -}}
+  {{- end -}}
+  {{- if gt .Width 800 -}}
+    {{- $medium := .Resize "800x webp q90" -}}
+    {{- $candidates = $candidates | append (printf "%s %dw" $medium.RelPermalink $medium.Width) -}}
+  {{- end -}}
+  {{- $large := .Process "webp q90" -}}
+  {{- if gt .Width 1200 }}{{ $large = .Resize "1200x webp q90" }}{{ end -}}
+  {{- $candidates = $candidates | append (printf "%s %dw" $large.RelPermalink $large.Width) -}}
+  {{- $src = $large.RelPermalink -}}
+  {{- $srcset = delimit $candidates ", " -}}
+  {{- $width = $large.Width -}}
+  {{- $height = $large.Height -}}
+{{- end -}}
+<figure class="cm-content-image">
+  <img src="{{ $src | safeURL }}"{{ with $srcset }} srcset="{{ . }}" sizes="(max-width: 900px) calc(100vw - 28px), 800px"{{ end }} alt="{{ .Text }}" loading="lazy" decoding="async"{{ with $width }} width="{{ . }}"{{ end }}{{ with $height }} height="{{ . }}"{{ end }}>
+  {{- with .Title }}<figcaption>{{ . }}</figcaption>{{ end -}}
+</figure>

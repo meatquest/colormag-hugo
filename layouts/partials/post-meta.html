@@ -1,0 +1,5 @@
+<div class="cm-entry-meta">
+  <time datetime="{{ .Date.Format `2006-01-02T15:04:05Z07:00` }}">{{ .Date.Format (site.Params.dateFormat | default "2006-01-02") }}</time>
+  {{ with (.Params.author | default site.Params.author) }}<span class="cm-meta-author">{{ . }}</span>{{ end }}
+  {{ if site.Params.showReadingTime }}<span>{{ i18n "readingTime" .ReadingTime }}</span>{{ end }}
+</div>

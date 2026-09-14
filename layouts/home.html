@@ -1,0 +1,46 @@
+{{ define "main" }}
+  {{ $posts := where site.RegularPages "Section" "posts" }}
+  {{ $featured := where $posts "Params.featured" true }}
+  {{ if eq (len $featured) 0 }}{{ $featured = first 5 $posts }}{{ else }}{{ $featured = first 5 $featured }}{{ end }}
+
+  <section class="cm-featured-section cm-container" aria-labelledby="featured-heading">
+    <div class="cm-section-heading">
+      <h2 id="featured-heading">{{ i18n "featuredPosts" }}</h2>
+      <a href="{{ `posts/` | relURL }}">{{ i18n "allPosts" }} ({{ len $posts }})</a>
+    </div>
+    {{ if gt (len $featured) 0 }}
+      <div class="cm-feature-grid">
+        {{ range $index, $post := $featured }}
+          <article class="cm-feature-item{{ if eq $index 0 }} cm-feature-lead{{ end }}">
+            <a class="cm-feature-media{{ if not .Params.cover }} cm-card-placeholder{{ end }}" href="{{ .RelPermalink }}">
+              {{ $cover := partial "cover-data.html" . }}
+              {{ if $cover.src }}<img src="{{ $cover.src }}"{{ with $cover.srcset }} srcset="{{ . }}"{{ end }} sizes="{{ if eq $index 0 }}(max-width: 760px) calc(100vw - 28px), (max-width: 960px) 60vw, 50vw{{ else }}(max-width: 540px) calc(100vw - 28px), (max-width: 760px) 50vw, 25vw{{ end }}" alt=""{{ with $cover.width }} width="{{ . }}"{{ end }}{{ with $cover.height }} height="{{ . }}"{{ end }}{{ if eq $index 0 }} fetchpriority="high"{{ else }} loading="lazy" decoding="async"{{ end }}>{{ else }}<span>{{ substr .Title 0 1 }}</span>{{ end }}
+              <span class="cm-feature-overlay"></span>
+              <span class="cm-feature-copy">
+                {{ with .GetTerms "categories" }}{{ with index . 0 }}<span class="cm-feature-category">{{ .LinkTitle }}</span>{{ end }}{{ end }}
+                <strong>{{ .LinkTitle }}</strong>
+                <time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format (site.Params.dateFormat | default "2006-01-02") }}</time>
+              </span>
+            </a>
+          </article>
+        {{ end }}
+      </div>
+    {{ else }}
+      <div class="cm-empty-state"><p>{{ i18n "addFirstPost" }} <code>content/posts/</code>.</p></div>
+    {{ end }}
+  </section>
+
+  <div class="cm-container cm-content-grid">
+    <section class="cm-primary-content" aria-labelledby="latest-heading">
+      <div class="cm-section-heading">
+        <h2 id="latest-heading">{{ i18n "latestPosts" }}</h2>
+      </div>
+      {{ $paginator := .Paginate $posts }}
+      <div class="cm-post-list">
+        {{ range $paginator.Pages }}{{ partial "post-card.html" . }}{{ else }}<p>{{ i18n "noPosts" }}</p>{{ end }}
+      </div>
+      {{ partial "pagination.html" $paginator }}
+    </section>
+    {{ partial "sidebar.html" . }}
+  </div>
+{{ end }}

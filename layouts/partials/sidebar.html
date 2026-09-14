@@ -1,0 +1,33 @@
+<aside class="cm-sidebar" aria-label="{{ i18n `sidebar` }}">
+  <section class="cm-widget">
+    <h2 class="cm-widget-title"><span>{{ i18n "recentPosts" }}</span></h2>
+    <ol class="cm-recent-posts">
+      {{ range first 5 (where site.RegularPages "Section" "posts") }}
+        <li>
+          <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+          <time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format (site.Params.dateFormat | default "2006-01-02") }}</time>
+        </li>
+      {{ end }}
+    </ol>
+  </section>
+
+  <section class="cm-widget">
+    <h2 class="cm-widget-title"><span>{{ i18n "categories" }}</span></h2>
+    <ul class="cm-taxonomy-list">
+      {{ range site.Taxonomies.categories.ByCount }}
+        <li><a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a><span>{{ .Count }}</span></li>
+      {{ else }}
+        <li>{{ i18n "noCategories" }}</li>
+      {{ end }}
+    </ul>
+  </section>
+
+  {{ with site.Taxonomies.tags }}
+  <section class="cm-widget">
+    <h2 class="cm-widget-title"><span>{{ i18n "tags" }}</span></h2>
+    <div class="cm-tag-cloud">
+      {{ range .ByCount }}<a href="{{ .Page.RelPermalink }}">#{{ .Page.LinkTitle }}</a>{{ end }}
+    </div>
+  </section>
+  {{ end }}
+</aside>

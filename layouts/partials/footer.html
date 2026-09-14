@@ -1,0 +1,38 @@
+<footer class="cm-footer">
+  <div class="cm-footer-widgets">
+    <div class="cm-container cm-footer-grid">
+      <section>
+        <h2>{{ site.Title }}</h2>
+        <p>{{ site.Params.description }}</p>
+      </section>
+      <section>
+        <h2>{{ i18n "categories" }}</h2>
+        <ul>
+          {{ range first 6 site.Taxonomies.categories.ByCount }}
+            <li><a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a><span>{{ .Count }}</span></li>
+          {{ else }}
+            <li>{{ i18n "noCategories" }}</li>
+          {{ end }}
+        </ul>
+      </section>
+      <section>
+        <h2>{{ i18n "recentPosts" }}</h2>
+        <ul>
+          {{ range first 4 (where site.RegularPages "Section" "posts") }}
+            <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+          {{ end }}
+        </ul>
+      </section>
+    </div>
+  </div>
+  <div class="cm-footer-bottom">
+    <div class="cm-container">
+      <p>&copy; {{ now.Year }} {{ site.Title }}. {{ site.Params.footerText }}</p>
+      <nav aria-label="{{ i18n `footerNavigation` }}">
+        <a href="{{ `/` | relURL }}">{{ i18n "home" }}</a>
+        <a href="{{ `posts/` | relURL }}">{{ i18n "allPosts" }}</a>
+        <a href="{{ `index.xml` | relURL }}">RSS</a>
+      </nav>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,33 @@
+{{ with . }}
+  {{ if gt .TotalPages 1 }}
+  <nav class="cm-pagination" aria-label="{{ i18n `pagination` }}">
+    {{ $current := .PageNumber }}
+    {{ $total := .TotalPages }}
+    {{ $start := sub $current 1 }}
+    {{ if le $current 2 }}{{ $start = 1 }}{{ end }}
+    {{ if ge $current (sub $total 1) }}{{ $start = sub $total 2 }}{{ end }}
+    {{ if lt $start 1 }}{{ $start = 1 }}{{ end }}
+    {{ $end := add $start 2 }}
+    {{ if gt $end $total }}{{ $end = $total }}{{ end }}
+    <ul>
+      {{ if gt $current 1 }}
+        <li><a class="cm-page-boundary" href="{{ .First.URL }}" aria-label="{{ i18n `firstPage` }}">{{ i18n "first" }}</a></li>
+      {{ end }}
+      {{ range .Pagers }}
+        {{ if and (ge .PageNumber $start) (le .PageNumber $end) }}
+          <li>
+            {{ if eq .PageNumber $current }}
+              <span class="cm-page-number is-current" aria-current="page" aria-label="{{ i18n `pageNumber` .PageNumber }}">{{ .PageNumber }}</span>
+            {{ else }}
+              <a class="cm-page-number" href="{{ .URL }}" aria-label="{{ i18n `pageNumber` .PageNumber }}">{{ .PageNumber }}</a>
+            {{ end }}
+          </li>
+        {{ end }}
+      {{ end }}
+      {{ if lt $current $total }}
+        <li><a class="cm-page-boundary" href="{{ .Last.URL }}" aria-label="{{ i18n `lastPage` }}">{{ i18n "last" }}</a></li>
+      {{ end }}
+    </ul>
+  </nav>
+  {{ end }}
+{{ end }}

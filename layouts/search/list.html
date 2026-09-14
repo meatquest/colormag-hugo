@@ -1,0 +1,22 @@
+{{ define "main" }}
+  <div class="cm-container">
+    {{ partial "breadcrumbs.html" . }}
+    <header class="cm-page-header">
+      <p class="cm-page-kicker">SEARCH</p>
+      <h1>{{ .Title }}</h1>
+      <p>{{ .Description }}</p>
+    </header>
+    <section class="cm-search-page" data-search-page data-index-url="{{ `index.json` | relURL }}" data-empty-message="{{ i18n `enterSearchQuery` }}" data-results-singular="{{ i18n `searchResult` }}" data-results-plural="{{ i18n `searchResults` }}" data-error-message="{{ i18n `searchIndexError` }}">
+      <form class="cm-search-form" role="search">
+        <label for="site-search">{{ i18n "searchKeywords" }}</label>
+        <div>
+          <input id="site-search" type="search" name="q" placeholder="{{ i18n `searchLongPlaceholder` }}" autocomplete="off">
+          <button type="submit">{{ i18n "search" }}</button>
+        </div>
+      </form>
+      <p class="cm-search-status" aria-live="polite">{{ i18n "enterSearchQuery" }}</p>
+      <div class="cm-search-results"></div>
+      <noscript><p>{{ i18n "javascriptRequired" }}</p></noscript>
+    </section>
+  </div>
+{{ end }}

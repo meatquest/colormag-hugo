@@ -1,0 +1,17 @@
+<article class="cm-post-card">
+  <a class="cm-card-media{{ if not .Params.cover }} cm-card-placeholder{{ end }}" href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">
+    {{ $cover := partial "cover-data.html" . }}
+    {{ if $cover.src }}
+      <img src="{{ $cover.src }}"{{ with $cover.srcset }} srcset="{{ . }}"{{ end }} sizes="(max-width: 540px) calc(100vw - 28px), (max-width: 760px) 38vw, (max-width: 960px) 32vw, 310px" alt="" loading="lazy" decoding="async"{{ with $cover.width }} width="{{ . }}"{{ end }}{{ with $cover.height }} height="{{ . }}"{{ end }}>
+    {{ else }}
+      <span>{{ substr .Title 0 1 }}</span>
+    {{ end }}
+  </a>
+  <div class="cm-card-content">
+    {{ partial "category-links.html" . }}
+    <h2 class="cm-card-title"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+    {{ partial "post-meta.html" . }}
+    <p>{{ .Summary | plainify | htmlUnescape | truncate 130 }}</p>
+    <a class="cm-read-more" href="{{ .RelPermalink }}">{{ i18n "readMore" }} <span aria-hidden="true">→</span></a>
+  </div>
+</article>

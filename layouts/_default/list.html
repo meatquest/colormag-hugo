@@ -1,0 +1,23 @@
+{{ define "main" }}
+  <div class="cm-container">
+    {{ partial "breadcrumbs.html" . }}
+    <header class="cm-page-header">
+      <p class="cm-page-kicker">{{ if eq .Kind "term" }}{{ i18n "topics" }}{{ else if eq .Section "posts" }}BLOG{{ else }}ARCHIVE{{ end }}</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+      {{ if eq .Section "posts" }}<p class="cm-page-count">{{ i18n "publishedPosts" (len .RegularPages) }}</p>{{ end }}
+    </header>
+  </div>
+  <div class="cm-container cm-content-grid">
+    <section class="cm-primary-content">
+      {{ $pages := .Pages }}
+      {{ if eq .Kind "section" }}{{ $pages = .RegularPages }}{{ end }}
+      {{ $paginator := .Paginate $pages }}
+      <div class="cm-post-list">
+        {{ range $paginator.Pages }}{{ partial "post-card.html" . }}{{ else }}<p>{{ i18n "noMatchingPosts" }}</p>{{ end }}
+      </div>
+      {{ partial "pagination.html" $paginator }}
+    </section>
+    {{ partial "sidebar.html" . }}
+  </div>
+{{ end }}

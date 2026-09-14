@@ -1,0 +1,11 @@
+{{ define "main" }}
+  <section class="cm-container cm-error-page">
+    <p class="cm-error-code">404</p>
+    <h1>{{ i18n "pageNotFound" }}</h1>
+    <p>{{ i18n "pageNotFoundText" }}</p>
+    <div>
+      <a class="cm-button" href="{{ `/` | relURL }}">{{ i18n "backHome" }}</a>
+      <a href="{{ `search/` | relURL }}">{{ i18n "searchPosts" }}</a>
+    </div>
+  </section>
+{{ end }}

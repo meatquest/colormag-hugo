@@ -1,0 +1,167 @@
+[skipToContent]
+other = "Skip to content"
+
+[backToTop]
+other = "Back to top"
+
+[menu]
+other = "Menu"
+
+[mainNavigation]
+other = "Main navigation"
+
+[footerNavigation]
+other = "Footer navigation"
+
+[search]
+other = "Search"
+
+[searchArticles]
+other = "Search articles"
+
+[searchPlaceholder]
+other = "Search…"
+
+[breadcrumbs]
+other = "Breadcrumbs"
+
+[home]
+other = "Home"
+
+[posts]
+other = "Posts"
+
+[featuredPosts]
+other = "Featured posts"
+
+[allPosts]
+other = "All posts"
+
+[latestPosts]
+other = "Latest posts"
+
+[recentPosts]
+other = "Recent posts"
+
+[categories]
+other = "Categories"
+
+[tags]
+other = "Tags"
+
+[topics]
+other = "Topics"
+
+[browseTopics]
+other = "Browse articles by topic."
+
+[articlesCount]
+one = "{{ .Count }} article"
+other = "{{ .Count }} articles"
+
+[publishedPosts]
+one = "{{ .Count }} published post"
+other = "{{ .Count }} published posts"
+
+[readingTime]
+one = "{{ .Count }} min read"
+other = "{{ .Count }} min read"
+
+[readMore]
+other = "Read more"
+
+[tableOfContents]
+other = "Table of contents"
+
+[postNavigation]
+other = "Post navigation"
+
+[previousPost]
+other = "Previous post"
+
+[nextPost]
+other = "Next post"
+
+[relatedPosts]
+other = "Related posts"
+
+[pagination]
+other = "Pagination"
+
+[previous]
+other = "Previous"
+
+[next]
+other = "Next"
+
+[pageNumber]
+other = "Page {{ . }}"
+
+[previousPage]
+other = "Previous page"
+
+[nextPage]
+other = "Next page"
+
+[first]
+other = "First"
+
+[last]
+other = "Last"
+
+[firstPage]
+other = "First page"
+
+[lastPage]
+other = "Last page"
+
+[sidebar]
+other = "Sidebar"
+
+[noCategories]
+other = "No categories yet."
+
+[noItems]
+other = "No items yet."
+
+[noMatchingPosts]
+other = "No matching posts."
+
+[noPosts]
+other = "No posts yet."
+
+[addFirstPost]
+other = "Add your first post to"
+
+[pageNotFound]
+other = "Page not found"
+
+[pageNotFoundText]
+other = "The page may have moved or no longer exists."
+
+[backHome]
+other = "Back to home"
+
+[searchPosts]
+other = "Search posts"
+
+[searchKeywords]
+other = "Enter keywords"
+
+[searchLongPlaceholder]
+other = "Search titles, categories, and content"
+
+[enterSearchQuery]
+other = "Enter a search query."
+
+[searchResult]
+other = "result"
+
+[searchResults]
+other = "results"
+
+[searchIndexError]
+other = "Unable to load the search index."
+
+[javascriptRequired]
+other = "JavaScript is required for site search."

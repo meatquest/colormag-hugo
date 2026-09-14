@@ -1,0 +1,69 @@
+{{ define "main" }}
+  <div class="cm-container">
+    {{ partial "breadcrumbs.html" . }}
+  </div>
+  {{ if eq .Section "posts" }}
+    <div class="cm-container cm-content-grid">
+      <article class="cm-single-post">
+        <header class="cm-single-header">
+          {{ partial "category-links.html" . }}
+          <h1>{{ .Title }}</h1>
+          {{ with .Description }}<p class="cm-single-description">{{ . }}</p>{{ end }}
+          {{ partial "post-meta.html" . }}
+        </header>
+
+        {{ $cover := partial "cover-data.html" . }}
+        {{ with $cover.src }}
+          <figure class="cm-single-cover"><img src="{{ . }}"{{ with $cover.srcset }} srcset="{{ . }}"{{ end }} sizes="(max-width: 760px) calc(100vw - 28px), (max-width: 1180px) 70vw, 800px" alt="{{ $.Params.coverAlt | default $.Title }}" fetchpriority="high"{{ with $cover.width }} width="{{ . }}"{{ end }}{{ with $cover.height }} height="{{ . }}"{{ end }}></figure>
+        {{ end }}
+
+        {{ $showToc := site.Params.showTableOfContents }}{{ if isset .Params "toc" }}{{ $showToc = .Params.toc }}{{ end }}
+        {{ if and $showToc (findRE "<li>" .TableOfContents) }}
+          <details class="cm-toc" open>
+            <summary>{{ i18n "tableOfContents" }}</summary>
+            {{ .TableOfContents }}
+          </details>
+        {{ end }}
+
+        <div class="cm-entry-content">{{ .Content }}</div>
+
+        {{ with .GetTerms "tags" }}
+          <footer class="cm-entry-footer">
+            <span>{{ i18n "tags" }}</span>
+            {{ range . }}<a href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>{{ end }}
+          </footer>
+        {{ end }}
+
+        <nav class="cm-post-navigation" aria-label="{{ i18n `postNavigation` }}">
+          {{ with .NextInSection }}<a href="{{ .RelPermalink }}"><span>← {{ i18n "previousPost" }}</span><strong>{{ .LinkTitle }}</strong></a>{{ end }}
+          {{ with .PrevInSection }}<a href="{{ .RelPermalink }}"><span>{{ i18n "nextPost" }} →</span><strong>{{ .LinkTitle }}</strong></a>{{ end }}
+        </nav>
+
+        {{ $related := site.RegularPages.Related . | first 3 }}
+        {{ with $related }}
+          <section class="cm-related" aria-labelledby="related-heading">
+            <h2 id="related-heading">{{ i18n "relatedPosts" }}</h2>
+            <div class="cm-related-grid">
+              {{ range . }}
+                <article>
+                  <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                  <time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date.Format (site.Params.dateFormat | default "2006-01-02") }}</time>
+                </article>
+              {{ end }}
+            </div>
+          </section>
+        {{ end }}
+      </article>
+      {{ partial "sidebar.html" . }}
+    </div>
+  {{ else }}
+    <article class="cm-container cm-page-article">
+      <header class="cm-page-header">
+        <p class="cm-page-kicker">PAGE</p>
+        <h1>{{ .Title }}</h1>
+        {{ with .Description }}<p>{{ . }}</p>{{ end }}
+      </header>
+      <div class="cm-entry-content">{{ .Content }}</div>
+    </article>
+  {{ end }}
+{{ end }}

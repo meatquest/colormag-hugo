@@ -1,0 +1,17 @@
+{{- $items := slice -}}
+{{- range where site.RegularPages "Section" "posts" -}}
+  {{- $categories := slice -}}
+  {{- range .GetTerms "categories" -}}{{- $categories = $categories | append .LinkTitle -}}{{- end -}}
+  {{- $tags := slice -}}
+  {{- range .GetTerms "tags" -}}{{- $tags = $tags | append .LinkTitle -}}{{- end -}}
+  {{- $items = $items | append (dict
+    "title" .Title
+    "url" .RelPermalink
+    "date" (.Date.Format (site.Params.dateFormat | default "2006-01-02"))
+    "description" (.Description | default (.Summary | plainify) | htmlUnescape)
+    "content" (.Plain | htmlUnescape | truncate 1000)
+    "categories" $categories
+    "tags" $tags
+  ) -}}
+{{- end -}}
+{{- $items | jsonify -}}

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="{{ site.Language.LanguageCode | default `en` }}">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="{{ if .IsHome }}home{{ else }}inner-page{{ end }} kind-{{ .Kind }}">
+    <a class="skip-link" href="#main-content">{{ i18n "skipToContent" }}</a>
+    <div id="page" class="cm-site">
+      {{ partial "header.html" . }}
+      <main id="main-content" class="cm-main" tabindex="-1">
+        {{ block "main" . }}{{ end }}
+      </main>
+      {{ partial "footer.html" . }}
+    </div>
+    <button class="back-to-top" type="button" aria-label="{{ i18n `backToTop` }}" hidden>↑</button>
+    {{- $script := resources.Get "js/main.js" | minify | fingerprint -}}
+    <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous" defer></script>
+  </body>
+</html>

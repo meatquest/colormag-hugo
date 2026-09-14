@@ -1,0 +1,38 @@
+<header class="cm-header">
+  <div class="cm-branding cm-container">
+    <div class="cm-brand-text">
+      {{ if $.IsHome }}
+        <h1 class="cm-site-title"><a href="{{ `/` | relURL }}">{{ site.Title }}</a></h1>
+      {{ else }}
+        <p class="cm-site-title"><a href="{{ `/` | relURL }}">{{ site.Title }}</a></p>
+      {{ end }}
+      {{ with site.Params.description }}<p class="cm-site-description">{{ . }}</p>{{ end }}
+    </div>
+    <div class="cm-header-accent" aria-hidden="true"><span>MAGAZINE</span></div>
+  </div>
+
+  <div class="cm-navigation-wrap">
+    <div class="cm-container cm-navigation-inner">
+      <button class="cm-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu">
+        <span class="cm-menu-icon" aria-hidden="true"></span>
+        <span>{{ i18n "menu" }}</span>
+      </button>
+      <nav class="cm-primary-nav" aria-label="{{ i18n `mainNavigation` }}">
+        <ul id="primary-menu" class="cm-menu">
+          {{ $current := . }}
+          {{ range site.Menus.main }}
+            {{ $active := or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }}
+            <li class="{{ if $active }}is-current{{ end }}">
+              <a href="{{ .URL }}"{{ if $active }} aria-current="page"{{ end }}>{{ .Name }}</a>
+            </li>
+          {{ end }}
+        </ul>
+      </nav>
+      <form class="cm-header-search" action="{{ `search/` | relURL }}" method="get" role="search">
+        <label class="screen-reader-text" for="header-search">{{ i18n "searchArticles" }}</label>
+        <input id="header-search" type="search" name="q" placeholder="{{ i18n `searchPlaceholder` }}" autocomplete="off">
+        <button type="submit" aria-label="{{ i18n `search` }}">⌕</button>
+      </form>
+    </div>
+  </div>
+</header>
